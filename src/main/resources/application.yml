@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://us-east.connect.psdb.cloud/mysql-db?sslMode=VERIFY_IDENTITY
+    username: dfnseouh0furybrjne4g
+    password: pscale_pw_o9rPpynBJWlFgjK61b2kgXtQYAv5qxydFhTJZYZxibv
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+appDescription: "Pragma Powerup"
+appVersion: "1.0.0"

@@ -27,12 +27,14 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "201", description = "Owner created", content = @Content),
             @ApiResponse(responseCode = "409", description = "Owner already exists", content = @Content)
     })
-    @PostMapping("/")
+
+    @PostMapping("/create-owner")
     public ResponseEntity<Void> createOwnerUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         try {
             usuarioHandler.saveUsuarioPropietario(usuarioRequestDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println("Error creando propietario " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

@@ -17,5 +17,5 @@ public class UsuarioModel {
     private String celular;
     private String correo;
     private String clave;
-    private Integer idRol;
+    private Integer idRole;
 }

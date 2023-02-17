@@ -8,6 +8,7 @@ import com.example.usuariopowerUp.domain.spi.IRolePersistencePort;
 import com.example.usuariopowerUp.domain.spi.IUsuarioPersistencePort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.regex.Pattern;
 
@@ -17,11 +18,13 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
     private final IUsuarioPersistencePort usuarioPersistencePort;
     private final IRolePersistencePort rolePersistencePort;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public UsuarioUseCase(IUsuarioPersistencePort usuarioPersistencePort, IRolePersistencePort rolePersistencePort) {
+    public UsuarioUseCase(IUsuarioPersistencePort usuarioPersistencePort, IRolePersistencePort rolePersistencePort, PasswordEncoder passwordEncoder) {
         this.usuarioPersistencePort = usuarioPersistencePort;
         this.rolePersistencePort = rolePersistencePort;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,7 +33,9 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
         RoleModel role = rolePersistencePort.findByNombre("propietario");
 
-        usuarioModel.setIdRol(role.getId());
+        usuarioModel.setIdRole(role.getId());
+
+        usuarioModel.setClave(passwordEncoder.encode(usuarioModel.getClave()));
 
         usuarioPersistencePort.saveUsuario(usuarioModel);
     }
@@ -53,7 +58,7 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
 
     private void validateCelular(String celular){
-        String regex = "/[+]?[0-9]{10}";
+        String regex = "[+]?[0-9]{10,12}";
 
         Pattern pattern = Pattern.compile(regex);
         if(!pattern.matcher(celular).matches()){
@@ -61,7 +66,7 @@ public class UsuarioUseCase implements IUsuarioServicePort {
             throw new ValidationException("Celular invalido");
         }
     }   private void validateDocumento(String documento){
-        String regex = "/[0-9]/gm";
+        String regex = "[0-9]+";
 
         Pattern pattern = Pattern.compile(regex);
 
