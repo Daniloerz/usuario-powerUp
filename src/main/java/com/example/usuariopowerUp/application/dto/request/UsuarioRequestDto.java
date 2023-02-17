@@ -12,5 +12,5 @@ public class UsuarioRequestDto {
     private String celular;
     private String correo;
     private String clave;
-    private Integer idRol;
+    private Integer idRole;
 }
