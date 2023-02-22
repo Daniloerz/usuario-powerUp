@@ -1,5 +1,7 @@
 package com.example.usuariopowerUp.domain.usecase;
 
+import com.example.usuariopowerUp.application.dto.response.RoleResponseDto;
+import com.example.usuariopowerUp.application.dto.response.UsuarioResponseDto;
 import com.example.usuariopowerUp.domain.api.IUsuarioServicePort;
 import com.example.usuariopowerUp.domain.exception.ValidationException;
 import com.example.usuariopowerUp.domain.model.RoleModel;
@@ -27,6 +29,8 @@ public class UsuarioUseCase implements IUsuarioServicePort {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+
     @Override
     public void saveUsuarioPropietario(UsuarioModel usuarioModel) {
         this.validateUsuario(usuarioModel);
@@ -39,6 +43,35 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
         usuarioPersistencePort.saveUsuario(usuarioModel);
     }
+
+    @Override
+    public UsuarioResponseDto findUserByIdSP(Integer id) {
+        UsuarioModel usuarioModel = usuarioPersistencePort.findUserByIdPP(id);
+        RoleModel roleModel = rolePersistencePort.findRoleByIdPP(usuarioModel.getIdRole());
+
+        return buildUsuarioResponseDto(usuarioModel, roleModel);
+    }
+
+    private UsuarioResponseDto buildUsuarioResponseDto(UsuarioModel usuarioModel, RoleModel roleModel){
+        UsuarioResponseDto usuarioResponseDto = new UsuarioResponseDto();
+        RoleResponseDto roleResponseDto = new RoleResponseDto();
+
+        roleResponseDto.setId(roleModel.getId());
+        roleResponseDto.setNombre(roleModel.getNombre());
+        roleResponseDto.setDescripcion(roleModel.getDescripcion());
+
+        usuarioResponseDto.setRole(roleResponseDto);
+
+        usuarioResponseDto.setId(usuarioModel.getId());
+        usuarioResponseDto.setApellido(usuarioModel.getApellido());
+        usuarioResponseDto.setDocumento(usuarioModel.getDocumento());
+        usuarioResponseDto.setCelular(usuarioModel.getCelular());
+        usuarioResponseDto.setCorreo(usuarioModel.getCorreo());
+        usuarioResponseDto.setNombre(usuarioModel.getNombre());
+
+        return usuarioResponseDto;
+    }
+
 
     private void validateUsuario(UsuarioModel usuarioModel) {
         this.validateCorreo(usuarioModel.getCorreo());

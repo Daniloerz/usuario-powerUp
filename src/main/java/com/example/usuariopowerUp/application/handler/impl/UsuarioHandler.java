@@ -1,6 +1,7 @@
 package com.example.usuariopowerUp.application.handler.impl;
 
 import com.example.usuariopowerUp.application.dto.request.UsuarioRequestDto;
+import com.example.usuariopowerUp.application.dto.response.UsuarioResponseDto;
 import com.example.usuariopowerUp.application.handler.IUsuarioHandler;
 import com.example.usuariopowerUp.application.mapper.IUsuarioRequestMapper;
 import com.example.usuariopowerUp.domain.api.IUsuarioServicePort;
@@ -19,4 +20,12 @@ public class UsuarioHandler implements IUsuarioHandler {
     public void saveUsuarioPropietario(UsuarioRequestDto userRequestDto) {
         usuarioServicePort.saveUsuarioPropietario(usuarioRequestMapper.toObject(userRequestDto));
     }
+
+    @Override
+    public UsuarioResponseDto findUserById(Integer id) {
+
+        return usuarioServicePort.findUserByIdSP(id);
+    }
+
+
 }
