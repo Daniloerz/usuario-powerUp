@@ -2,7 +2,9 @@ package com.example.usuariopowerUp.infrastructure.input.rest;
 
 
 import com.example.usuariopowerUp.application.dto.request.UsuarioRequestDto;
+import com.example.usuariopowerUp.application.dto.response.UsuarioResponseDto;
 import com.example.usuariopowerUp.application.handler.IUsuarioHandler;
+import com.example.usuariopowerUp.domain.model.UsuarioModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,10 +12,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/v1/usuario")
@@ -37,6 +37,12 @@ public class UsuarioRestController {
             System.out.println("Error creando propietario " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDto> findUsuarioById(@PathVariable Integer id){
+
+        return ResponseEntity.ok(usuarioHandler.findUserById(id));
     }
 
 }
