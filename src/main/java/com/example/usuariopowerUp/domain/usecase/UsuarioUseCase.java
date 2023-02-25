@@ -32,12 +32,12 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
 
     @Override
-    public void saveUsuarioPropietario(UsuarioModel usuarioModel) {
+    public void saveUsuario(UsuarioModel usuarioModel, String role) {
         this.validateUsuario(usuarioModel);
 
-        RoleModel role = rolePersistencePort.findByNombre("propietario");
+        RoleModel userRole = rolePersistencePort.findByNombre(role);
 
-        usuarioModel.setIdRole(role.getId());
+        usuarioModel.setIdRole(userRole.getId());
 
         usuarioModel.setClave(passwordEncoder.encode(usuarioModel.getClave()));
 

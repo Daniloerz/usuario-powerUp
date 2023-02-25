@@ -1,6 +1,5 @@
 package com.example.usuariopowerUp.application.dto.response;
 
-import com.example.usuariopowerUp.infrastructure.out.jpa.entity.RoleEntity;
 import lombok.Getter;
 import lombok.Setter;
 

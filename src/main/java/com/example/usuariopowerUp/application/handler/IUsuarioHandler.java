@@ -2,10 +2,9 @@ package com.example.usuariopowerUp.application.handler;
 
 import com.example.usuariopowerUp.application.dto.request.UsuarioRequestDto;
 import com.example.usuariopowerUp.application.dto.response.UsuarioResponseDto;
-import com.example.usuariopowerUp.domain.model.UsuarioModel;
 
 public interface IUsuarioHandler {
-    void saveUsuarioPropietario(UsuarioRequestDto userRequestDto);
+    void saveUsuario(UsuarioRequestDto userRequestDto, String role);
 
     UsuarioResponseDto findUserById(Integer id);
 }

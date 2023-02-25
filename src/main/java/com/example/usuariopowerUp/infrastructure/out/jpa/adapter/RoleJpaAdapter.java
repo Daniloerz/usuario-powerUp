@@ -4,7 +4,6 @@ import com.example.usuariopowerUp.domain.model.RoleModel;
 import com.example.usuariopowerUp.domain.spi.IRolePersistencePort;
 import com.example.usuariopowerUp.infrastructure.exception.NoDataFoundException;
 import com.example.usuariopowerUp.infrastructure.out.jpa.entity.RoleEntity;
-import com.example.usuariopowerUp.infrastructure.out.jpa.entity.UsuarioEntity;
 import com.example.usuariopowerUp.infrastructure.out.jpa.mapper.IRoleEntityMapper;
 import com.example.usuariopowerUp.infrastructure.out.jpa.repository.IRoleRepository;
 import lombok.RequiredArgsConstructor;
