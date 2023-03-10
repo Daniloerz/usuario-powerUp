@@ -4,6 +4,7 @@ package com.example.usuariopowerUp.infrastructure.input.rest;
 import com.example.usuariopowerUp.application.dto.request.UsuarioRequestDto;
 import com.example.usuariopowerUp.application.dto.response.UsuarioResponseDto;
 import com.example.usuariopowerUp.application.handler.IUsuarioHandler;
+import com.example.usuariopowerUp.infrastructure.input.enums.RoleEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,16 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/api/v1/usuario")
 @RequiredArgsConstructor
 public class UsuarioRestController {
 
     private final IUsuarioHandler usuarioHandler;
-    private final String rolePropietario = "propietario";
-    private final String roleEmpleado = "empleado";
-    private final String roleCliente = "cliente";
+
 
     @Operation(summary = "Add a new user")
     @ApiResponses(value = {
@@ -30,10 +28,10 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)
     })
 
-    @PostMapping("/create-owner")
+    @PostMapping("/owner")
     public ResponseEntity<Void> createOwnerUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         try {
-            usuarioHandler.saveUsuario(usuarioRequestDto, rolePropietario);
+            usuarioHandler.saveUsuario(usuarioRequestDto, RoleEnum.PROPIETARIO.getDbName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println("Error creando propietario " + e.getMessage());
@@ -41,10 +39,10 @@ public class UsuarioRestController {
         }
     }
 
-    @PostMapping("/create-employe")
+    @PostMapping("/employe")
     public ResponseEntity<Void> createEmployeUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         try {
-            usuarioHandler.saveUsuario(usuarioRequestDto, roleEmpleado);
+            usuarioHandler.saveUsuario(usuarioRequestDto, RoleEnum.EMPLEADO.getDbName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println("Error creando empleado " + e.getMessage());
@@ -52,10 +50,10 @@ public class UsuarioRestController {
         }
     }
 
-    @PostMapping("/create-client")
+    @PostMapping("/client")
     public ResponseEntity<Void> createClientUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         try {
-            usuarioHandler.saveUsuario(usuarioRequestDto, roleCliente);
+            usuarioHandler.saveUsuario(usuarioRequestDto, RoleEnum.CLIENTE.getDbName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println("Error creando cliente " + e.getMessage());
