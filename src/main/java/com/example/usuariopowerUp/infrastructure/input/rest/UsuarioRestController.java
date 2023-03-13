@@ -28,21 +28,24 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)
     })
 
-    @PostMapping("/owner")
-    public ResponseEntity<Void> createOwnerUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+    @PostMapping("/{idAdmin}/propietario")
+    public ResponseEntity<Void> createOwnerUser(@PathVariable Integer idAdmin,
+                                                @RequestBody UsuarioRequestDto usuarioRequestDto) {
         try {
-            usuarioHandler.saveUsuario(usuarioRequestDto, RoleEnum.PROPIETARIO.getDbName());
+            usuarioHandler.savePropietario(idAdmin, usuarioRequestDto, RoleEnum.PROPIETARIO.getDbName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error creando propietario " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/employe")
-    public ResponseEntity<Void> createEmployeUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+    @PostMapping("/{idPropietario}/empleado")
+    public ResponseEntity<Void> createEmployeeUser(@PathVariable Integer idPropietario,
+                                                  @RequestBody UsuarioRequestDto usuarioRequestDto) {
         try {
-            usuarioHandler.saveUsuario(usuarioRequestDto, RoleEnum.EMPLEADO.getDbName());
+            usuarioHandler.saveEmpleado(idPropietario, usuarioRequestDto, RoleEnum.EMPLEADO.getDbName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println("Error creando empleado " + e.getMessage());
@@ -50,10 +53,10 @@ public class UsuarioRestController {
         }
     }
 
-    @PostMapping("/client")
+    @PostMapping("/cliente")
     public ResponseEntity<Void> createClientUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
         try {
-            usuarioHandler.saveUsuario(usuarioRequestDto, RoleEnum.CLIENTE.getDbName());
+            usuarioHandler.saveCliente(usuarioRequestDto, RoleEnum.CLIENTE.getDbName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println("Error creando cliente " + e.getMessage());

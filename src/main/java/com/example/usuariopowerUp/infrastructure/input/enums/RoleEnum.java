@@ -3,7 +3,10 @@ package com.example.usuariopowerUp.infrastructure.input.enums;
 import java.util.Arrays;
 
 public enum RoleEnum {
-    PROPIETARIO("propietario"), EMPLEADO("empleado"), CLIENTE("cliente");
+    ADMINISTRADOR ("administrador"),
+    PROPIETARIO("propietario"),
+    EMPLEADO("empleado"),
+    CLIENTE("cliente");
 
     private String dbName;
 

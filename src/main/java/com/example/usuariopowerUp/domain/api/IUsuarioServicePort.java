@@ -6,7 +6,9 @@ import com.example.usuariopowerUp.domain.model.UsuarioModel;
 
 public interface IUsuarioServicePort {
 
-    void saveUsuario(UsuarioModel usuarioModel, String role);
+    void savePropietario(Integer idAdmin, UsuarioModel usuarioModel, String role);
+    void saveCliente(UsuarioModel usuarioModel, String role);
+    void saveEmpleado(Integer idPropietario, UsuarioModel usuarioModel, String role);
 
     UsuarioResponseDto findUserByIdSP(Integer id);
 }

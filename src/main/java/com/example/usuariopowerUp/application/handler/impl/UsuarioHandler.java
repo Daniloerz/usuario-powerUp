@@ -17,8 +17,17 @@ public class UsuarioHandler implements IUsuarioHandler {
     private final IUsuarioRequestMapper usuarioRequestMapper;
 
     @Override
-    public void saveUsuario(UsuarioRequestDto userRequestDto, String role) {
-        usuarioServicePort.saveUsuario(usuarioRequestMapper.toObject(userRequestDto), role);
+    public void saveCliente(UsuarioRequestDto userRequestDto, String role) {
+        usuarioServicePort.saveCliente(usuarioRequestMapper.toObject(userRequestDto), role);
+    }
+
+    @Override
+    public void savePropietario(Integer idAdmin, UsuarioRequestDto userRequestDto, String role) {
+        usuarioServicePort.savePropietario(idAdmin, usuarioRequestMapper.toObject(userRequestDto), role);
+    }
+    @Override
+    public void saveEmpleado(Integer idPropietario, UsuarioRequestDto userRequestDto, String role) {
+        usuarioServicePort.saveEmpleado(idPropietario, usuarioRequestMapper.toObject(userRequestDto), role);
     }
 
     @Override
