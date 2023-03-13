@@ -8,6 +8,7 @@ import com.example.usuariopowerUp.domain.model.RoleModel;
 import com.example.usuariopowerUp.domain.model.UsuarioModel;
 import com.example.usuariopowerUp.domain.spi.IRolePersistencePort;
 import com.example.usuariopowerUp.domain.spi.IUsuarioPersistencePort;
+import com.example.usuariopowerUp.infrastructure.input.enums.RoleEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,10 +30,36 @@ public class UsuarioUseCase implements IUsuarioServicePort {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
+    public void saveCliente(UsuarioModel usuarioModel, String role) {
+        this.validateUsuario(usuarioModel);
 
+        RoleModel userRole = rolePersistencePort.findByNombre(role);
+
+        usuarioModel.setIdRole(userRole.getId());
+
+        usuarioModel.setClave(passwordEncoder.encode(usuarioModel.getClave()));
+
+        usuarioPersistencePort.saveUsuario(usuarioModel);
+    }
 
     @Override
-    public void saveUsuario(UsuarioModel usuarioModel, String role) {
+    public void savePropietario(Integer idAdmin, UsuarioModel usuarioModel, String role) {
+        this.validateAdministrador(idAdmin);
+        this.validateUsuario(usuarioModel);
+
+        RoleModel userRole = rolePersistencePort.findByNombre(role);
+
+        usuarioModel.setIdRole(userRole.getId());
+
+        usuarioModel.setClave(passwordEncoder.encode(usuarioModel.getClave()));
+
+        usuarioPersistencePort.saveUsuario(usuarioModel);
+    }
+
+    @Override
+    public void saveEmpleado(Integer idPropietario, UsuarioModel usuarioModel, String role) {
+        this.validatePropietario(idPropietario);
         this.validateUsuario(usuarioModel);
 
         RoleModel userRole = rolePersistencePort.findByNombre(role);
@@ -98,7 +125,9 @@ public class UsuarioUseCase implements IUsuarioServicePort {
             log.error("Celular invalido");
             throw new ValidationException("Celular invalido");
         }
-    }   private void validateDocumento(String documento){
+    }
+
+    private void validateDocumento(String documento){
         String regex = "[0-9]+";
 
         Pattern pattern = Pattern.compile(regex);
@@ -106,6 +135,22 @@ public class UsuarioUseCase implements IUsuarioServicePort {
         if(!pattern.matcher(documento).matches()){
             log.error("Documento invalido");
             throw new ValidationException("Documento invalido");
+        }
+    }
+
+    private void validatePropietario(Integer idPropietario){
+        RoleModel roleModel = rolePersistencePort.findRoleByIdPP(idPropietario);
+        if(!roleModel.getNombre().equalsIgnoreCase(RoleEnum.PROPIETARIO.getDbName())){
+            log.error("Role invalido");
+            throw new ValidationException("Role invalido para crear usuario tipo \"Empleado\"");
+        }
+    }
+
+    private void validateAdministrador(Integer idAdmin){
+        RoleModel roleModel = rolePersistencePort.findRoleByIdPP(idAdmin);
+        if(!roleModel.getNombre().equalsIgnoreCase(RoleEnum.ADMINISTRADOR.getDbName())){
+            log.error("Role invalido");
+            throw new ValidationException("Role invalido para crear usuario tipo \"Propietario\"");
         }
     }
 }

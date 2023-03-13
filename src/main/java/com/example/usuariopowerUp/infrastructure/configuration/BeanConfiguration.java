@@ -31,7 +31,8 @@ public class BeanConfiguration {
 
     @Bean
     public IRolePersistencePort rolePersistencePort() {
-        return new RoleJpaAdapter(roleRepository, roleEntityMapper);
+        return new RoleJpaAdapter(roleRepository,
+                roleEntityMapper);
     }
 
     @Bean
