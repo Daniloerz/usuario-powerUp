@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.management.relation.Role;
 import java.util.regex.Pattern;
 
 public class UsuarioUseCase implements IUsuarioServicePort {
@@ -139,16 +140,18 @@ public class UsuarioUseCase implements IUsuarioServicePort {
     }
 
     private void validatePropietario(Integer idPropietario){
-        RoleModel roleModel = rolePersistencePort.findRoleByIdPP(idPropietario);
-        if(!roleModel.getNombre().equalsIgnoreCase(RoleEnum.PROPIETARIO.getDbName())){
+        UsuarioModel usuarioModel = usuarioPersistencePort.findUserByIdPP(idPropietario);
+        RoleModel roleModel = rolePersistencePort.findByNombre(RoleEnum.PROPIETARIO.getDbName());
+        if(!(usuarioModel.getIdRole() == roleModel.getId())){
             log.error("Role invalido");
             throw new ValidationException("Role invalido para crear usuario tipo \"Empleado\"");
         }
     }
 
     private void validateAdministrador(Integer idAdmin){
-        RoleModel roleModel = rolePersistencePort.findRoleByIdPP(idAdmin);
-        if(!roleModel.getNombre().equalsIgnoreCase(RoleEnum.ADMINISTRADOR.getDbName())){
+        UsuarioModel usuarioModel = usuarioPersistencePort.findUserByIdPP(idAdmin);
+        RoleModel roleModel = rolePersistencePort.findByNombre(RoleEnum.ADMINISTRADOR.getDbName());
+        if(!(usuarioModel.getIdRole() == roleModel.getId())){
             log.error("Role invalido");
             throw new ValidationException("Role invalido para crear usuario tipo \"Propietario\"");
         }

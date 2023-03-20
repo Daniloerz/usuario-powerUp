@@ -63,6 +63,7 @@ public class UsuarioRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDto> findUsuarioById(@PathVariable Integer id){
 
