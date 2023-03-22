@@ -4,13 +4,11 @@ import com.example.usuariopowerUp.domain.model.UsuarioModel;
 import com.example.usuariopowerUp.infrastructure.out.jpa.entity.UsuarioEntity;
 import com.example.usuariopowerUp.infrastructure.out.jpa.mapper.IUsuarioEntityMapper;
 import com.example.usuariopowerUp.infrastructure.out.jpa.repository.IUsuarioRepository;
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UsuarioJpaAdapterTest {
 

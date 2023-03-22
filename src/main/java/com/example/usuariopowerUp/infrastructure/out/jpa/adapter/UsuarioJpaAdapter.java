@@ -30,7 +30,7 @@ public class UsuarioJpaAdapter implements IUsuarioPersistencePort {
             UsuarioEntity usuarioEntity = usuarioEntityOptional.get();
             return usuarioEntityMapper.toUsuarioModel(usuarioEntity);
         } else {
-            throw new NoDataFoundException();
+            throw new NoDataFoundException("Usuario no encontrado");
         }
     }
 }
