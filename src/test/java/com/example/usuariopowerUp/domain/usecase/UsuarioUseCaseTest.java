@@ -98,7 +98,6 @@ class UsuarioUseCaseTest {
         ValidationException exception= assertThrows(ValidationException.class, () ->
                 usuarioUseCase.saveCliente(usuarioModel, "propietario"));
         assertEquals("Correo invalido", exception.getMessage());
-
     }
 
     @Test

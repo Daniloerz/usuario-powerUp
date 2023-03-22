@@ -29,7 +29,7 @@ public class RoleJpaAdapter implements IRolePersistencePort {
             RoleEntity roleEntity = roleEntityOptional.get();
             return roleEntityMapper.toRoleModel(roleEntity);
         } else {
-            throw new NoDataFoundException();
+            throw new NoDataFoundException("Role no encontrado");
         }
     }
 }
